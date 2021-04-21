@@ -42,8 +42,7 @@ public interface ArticleReadService {
       @Param("favoritedBy") String favoritedBy,
       @Param("page") CursorPageParameter page);
 
-  List<ArticleRevisionData> findArticleRevisions(
-      @Param("articleId") String articleId, @Param("page") Page page);
+  List<ArticleRevisionData> findRevisions(@Param("articleId") String articleId, @Param("page") Page page);
 
-  int countArticleRevision(@Param("articleId") String articleId);
+  int countRevision(@Param("articleId") String articleId);
 }

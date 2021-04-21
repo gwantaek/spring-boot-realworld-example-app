@@ -80,7 +80,7 @@ public class ArticleApi {
   }
 
   @GetMapping(path = "revisions")
-  public ResponseEntity getArticleRevisions(
+  public ResponseEntity getRevisions(
       @PathVariable("slug") String slug,
       @RequestParam(value = "offset", defaultValue = "0") int offset,
       @RequestParam(value = "limit", defaultValue = "20") int limit) {

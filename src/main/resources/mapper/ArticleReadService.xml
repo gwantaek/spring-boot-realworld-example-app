@@ -153,7 +153,7 @@
         </where>
         limit #{page.queryLimit}
     </select>
-    <select id="findArticleRevisions" resultMap="transfer.data.articleRevisionData">
+    <select id="findRevisions" resultMap="transfer.data.articleRevisionData">
         select
         A.id articleRevisionId,
         A.article_id articleRevisionArticleId,
@@ -169,7 +169,7 @@
         order by A.revised_at desc
         limit #{page.offset}, #{page.limit}
     </select>
-    <select id="countArticleRevision" resultType="java.lang.Integer">
+    <select id="countRevision" resultType="java.lang.Integer">
         select
         count(DISTINCT A.id)
         from

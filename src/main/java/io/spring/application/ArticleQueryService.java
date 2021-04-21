@@ -136,8 +136,8 @@ public class ArticleQueryService {
     }
 
     String articleId = articleData.getId();
-    List<ArticleRevisionData> revisions = articleReadService.findArticleRevisions(articleId, page);
-    int revisionCount = articleReadService.countArticleRevision(articleId);
+    List<ArticleRevisionData> revisions = articleReadService.findRevisions(articleId, page);
+    int revisionCount = articleReadService.countRevision(articleId);
 
     return new ArticleRevisionDataList(revisions, revisionCount);
   }

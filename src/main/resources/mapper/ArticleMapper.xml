@@ -22,14 +22,14 @@
     <insert id="insertRevision">
         insert into article_revisions(id, article_id, slug, title, description, body, type, revised_at)
         values(
-            #{articleRevision.id},
-            #{articleRevision.articleId},
-            #{articleRevision.slug},
-            #{articleRevision.title},
-            #{articleRevision.description},
-            #{articleRevision.body},
-            #{articleRevision.type},
-            #{articleRevision.revisedAt}
+            #{revision.id},
+            #{revision.articleId},
+            #{revision.slug},
+            #{revision.title},
+            #{revision.description},
+            #{revision.body},
+            #{revision.type},
+            #{revision.revisedAt}
         )
     </insert>
     <update id="update">

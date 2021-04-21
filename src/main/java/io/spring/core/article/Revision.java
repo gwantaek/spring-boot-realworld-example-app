@@ -10,7 +10,7 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
-public class ArticleRevision {
+public class Revision {
   private String id;
   private String articleId;
   private String slug;
@@ -20,13 +20,13 @@ public class ArticleRevision {
   private RevisionType type;
   private DateTime revisedAt;
 
-  public ArticleRevision(Article article, RevisionType type, DateTime revisedAt) {
+  public Revision(Article article, RevisionType type, DateTime revisedAt) {
     this(article.getId(), article.getSlug(), article.getTitle(),
             article.getDescription(), article.getBody(), type, revisedAt);
   }
 
-  public ArticleRevision(String articleId, String slug, String title, String description,
-                         String body, RevisionType type, DateTime revisedAt) {
+  public Revision(String articleId, String slug, String title, String description,
+                  String body, RevisionType type, DateTime revisedAt) {
     this.id = UUID.randomUUID().toString();
     this.articleId = articleId;
     this.slug = slug;
