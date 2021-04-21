@@ -1,9 +1,8 @@
 package io.spring.infrastructure.repository;
 
-import io.spring.core.article.Article;
-import io.spring.core.article.ArticleRepository;
-import io.spring.core.article.Tag;
+import io.spring.core.article.*;
 import io.spring.infrastructure.mybatis.mapper.ArticleMapper;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +21,10 @@ public class MyBatisArticleRepository implements ArticleRepository {
     public void save(Article article) {
         if (articleMapper.findById(article.getId()) == null) {
             createNew(article);
+            articleMapper.insertRevision(new ArticleRevision(article, RevisionType.INSERT, article.getCreatedAt()));
         } else {
             articleMapper.update(article);
+            articleMapper.insertRevision(new ArticleRevision(article, RevisionType.UPDATE, article.getUpdatedAt()));
         }
     }
 
@@ -51,5 +52,6 @@ public class MyBatisArticleRepository implements ArticleRepository {
     @Override
     public void remove(Article article) {
         articleMapper.delete(article.getId());
+        articleMapper.insertRevision(new ArticleRevision(article, RevisionType.DELETE, DateTime.now()));
     }
 }

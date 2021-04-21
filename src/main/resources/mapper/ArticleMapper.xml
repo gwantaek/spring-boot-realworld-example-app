@@ -19,6 +19,19 @@
     <insert id="insertArticleTagRelation">
         insert into article_tags (article_id, tag_id) values(#{articleId}, #{tagId})
     </insert>
+    <insert id="insertRevision">
+        insert into article_revisions(id, article_id, slug, title, description, body, type, revised_at)
+        values(
+            #{articleRevision.id},
+            #{articleRevision.articleId},
+            #{articleRevision.slug},
+            #{articleRevision.title},
+            #{articleRevision.description},
+            #{articleRevision.body},
+            #{articleRevision.type},
+            #{articleRevision.revisedAt}
+        )
+    </insert>
     <update id="update">
         update articles
           <set>

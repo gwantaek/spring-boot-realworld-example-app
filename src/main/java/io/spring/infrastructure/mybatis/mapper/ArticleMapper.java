@@ -1,6 +1,7 @@
 package io.spring.infrastructure.mybatis.mapper;
 
 import io.spring.core.article.Article;
+import io.spring.core.article.ArticleRevision;
 import io.spring.core.article.Tag;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -22,4 +23,6 @@ public interface ArticleMapper {
     void update(@Param("article") Article article);
 
     void delete(@Param("id") String id);
+
+    void insertRevision(@Param("articleRevision") ArticleRevision articleRevision);
 }
