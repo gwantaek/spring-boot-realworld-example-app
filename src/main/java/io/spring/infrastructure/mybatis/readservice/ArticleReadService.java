@@ -4,6 +4,8 @@ import io.spring.application.CursorPageParameter;
 import io.spring.application.Page;
 import io.spring.application.data.ArticleData;
 import java.util.List;
+
+import io.spring.application.data.ArticleRevisionData;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -39,4 +41,9 @@ public interface ArticleReadService {
       @Param("author") String author,
       @Param("favoritedBy") String favoritedBy,
       @Param("page") CursorPageParameter page);
+
+  List<ArticleRevisionData> findArticleRevisions(
+      @Param("articleId") String articleId, @Param("page") Page page);
+
+  int countArticleRevision(@Param("articleId") String articleId);
 }

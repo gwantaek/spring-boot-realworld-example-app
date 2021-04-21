@@ -3,6 +3,7 @@ package io.spring.api;
 import io.spring.api.exception.NoAuthorizationException;
 import io.spring.api.exception.ResourceNotFoundException;
 import io.spring.application.ArticleQueryService;
+import io.spring.application.Page;
 import io.spring.application.article.ArticleCommandService;
 import io.spring.application.article.UpdateArticleParam;
 import io.spring.application.data.ArticleData;
@@ -15,13 +16,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/articles/{slug}")
@@ -82,6 +77,16 @@ public class ArticleApi {
               return ResponseEntity.noContent().build();
             })
         .orElseThrow(ResourceNotFoundException::new);
+  }
+
+  @GetMapping(path = "revisions")
+  public ResponseEntity getArticleRevisions(
+      @PathVariable("slug") String slug,
+      @RequestParam(value = "offset", defaultValue = "0") int offset,
+      @RequestParam(value = "limit", defaultValue = "20") int limit) {
+
+    return ResponseEntity
+            .ok(articleQueryService.findRecentRevisions(slug, new Page(offset, limit)));
   }
 
   private Map<String, Object> articleResponse(ArticleData articleData) {

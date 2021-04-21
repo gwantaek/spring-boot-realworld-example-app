@@ -37,4 +37,15 @@
         <result column="commentArticleId" property="articleId"/>
         <association property="profileData" resultMap="profileData"/>
     </resultMap>
+
+    <resultMap id="articleRevisionData" type="io.spring.application.data.ArticleRevisionData">
+        <id column="articleRevisionId" property="id"/>
+        <result column="articleRevisionArticleId" property="articleId"/>
+        <result column="articleRevisionSlug" property="slug"/>
+        <result column="articleRevisionTitle" property="title"/>
+        <result column="articleRevisionDescription" property="description"/>
+        <result column="articleRevisionBody" property="body"/>
+        <result column="articleRevisionType" property="type"/>
+        <result column="articleRevisionRevisedAt" property="revisedAt"/>
+    </resultMap>
 </mapper>

@@ -153,6 +153,29 @@
         </where>
         limit #{page.queryLimit}
     </select>
+    <select id="findArticleRevisions" resultMap="transfer.data.articleRevisionData">
+        select
+        A.id articleRevisionId,
+        A.article_id articleRevisionArticleId,
+        A.slug articleRevisionSlug,
+        A.title articleRevisionTitle,
+        A.description articleRevisionDescription,
+        A.body articleRevisionBody,
+        A.type articleRevisionType,
+        A.revised_at articleRevisionRevisedAt
+        from
+        article_revisions A
+        where A.article_id = #{articleId}
+        order by A.revised_at desc
+        limit #{page.offset}, #{page.limit}
+    </select>
+    <select id="countArticleRevision" resultType="java.lang.Integer">
+        select
+        count(DISTINCT A.id)
+        from
+        article_revisions A
+        where A.article_id = #{articleId}
+    </select>
 
     <resultMap id="articleId" type="string">
         <id javaType="string" column="articleId"/>

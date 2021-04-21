@@ -2,9 +2,7 @@ package io.spring.application;
 
 import static java.util.stream.Collectors.toList;
 
-import io.spring.application.data.ArticleData;
-import io.spring.application.data.ArticleDataList;
-import io.spring.application.data.ArticleFavoriteCount;
+import io.spring.application.data.*;
 import io.spring.core.user.User;
 import io.spring.infrastructure.mybatis.readservice.ArticleFavoritesReadService;
 import io.spring.infrastructure.mybatis.readservice.ArticleReadService;
@@ -129,6 +127,19 @@ public class ArticleQueryService {
       int count = articleReadService.countFeedSize(followdUsers);
       return new ArticleDataList(articles, count);
     }
+  }
+
+  public ArticleRevisionDataList findRecentRevisions(String slug, Page page) {
+    ArticleData articleData = articleReadService.findBySlug(slug);
+    if (articleData == null) {
+      return new ArticleRevisionDataList(new ArrayList<>(), 0);
+    }
+
+    String articleId = articleData.getId();
+    List<ArticleRevisionData> revisions = articleReadService.findArticleRevisions(articleId, page);
+    int revisionCount = articleReadService.countArticleRevision(articleId);
+
+    return new ArticleRevisionDataList(revisions, revisionCount);
   }
 
   private void fillExtraInfo(List<ArticleData> articles, User currentUser) {
