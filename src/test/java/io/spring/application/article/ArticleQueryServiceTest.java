@@ -13,8 +13,10 @@ import io.spring.application.DateTimeCursor;
 import io.spring.application.Page;
 import io.spring.application.data.ArticleData;
 import io.spring.application.data.ArticleDataList;
+import io.spring.application.data.ArticleRevisionDataList;
 import io.spring.core.article.Article;
 import io.spring.core.article.ArticleRepository;
+import io.spring.core.article.RevisionType;
 import io.spring.core.favorite.ArticleFavorite;
 import io.spring.core.favorite.ArticleFavoriteRepository;
 import io.spring.core.user.FollowRelation;
@@ -230,5 +232,16 @@ public class ArticleQueryServiceTest extends DbTestBase {
     assertEquals(anotherUserFeed.getCount(), 1);
     ArticleData articleData = anotherUserFeed.getArticleDatas().get(0);
     assertTrue(articleData.getProfileData().isFollowing());
+  }
+
+  @Test
+  public void should_get_article_revisions() {
+    article.update(article.getTitle(), article.getDescription(), "body revision");
+    articleRepository.save(article);
+
+    ArticleRevisionDataList revisions = queryService.findRecentRevisions(article.getSlug(), new Page());
+    assertEquals(revisions.getCount(), 2);
+    assertEquals(revisions.getArticleRevisionDatas().get(0).getType(), RevisionType.UPDATE);
+    assertEquals(revisions.getArticleRevisionDatas().get(1).getType(), RevisionType.INSERT);
   }
 }
